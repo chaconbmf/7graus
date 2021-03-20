@@ -33,6 +33,14 @@ abstract class Shape implements InterfaceShape {
 
     public function getOtherShape($obj){
         
-        return json_encode(array($obj,"length"=>$this->getLength()));
+        $rpRadious = new ReflectionProperty('Circle', 'radius');
+        $rpRadious->setAccessible(true);
+        $closure = \Closure::bind(function (Circle $class) {
+            return $class->id;
+        }, null, Circle::class);
+        echo "propieties object:<pre>";
+        echo "radio:".$rpRadious->getValue($obj)."<pre>";
+        echo "Name:".$obj->getName()."<pre>";
+        echo "Id:".$closure($obj)."<pre>";
     }
 }
